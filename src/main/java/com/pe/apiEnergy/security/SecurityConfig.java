@@ -25,7 +25,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("api/servicios/**").permitAll()
+                        .requestMatchers("/api/servicios/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

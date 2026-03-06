@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: energy-api
+  namespace: energy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: energy-api
+  template:
+    metadata:
+      labels:
+        app: energy-api
+    spec:
+      containers:
+        - name: energy-api
+          image: ghcr.io/jjosuech/acenergy:latest
+          ports:
+            - containerPort: 8080
+
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: energy-secret
+                  key: DB_URL
+
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: energy-secret
+                  key: DB_USER
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: energy-secret
+                  key: DB_PASSWORD
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: energy-secret
+                  key: JWT_SECRET
